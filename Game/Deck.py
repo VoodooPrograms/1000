@@ -34,4 +34,4 @@ class Deck:
 
     def dump(self):
         for card in self.cards:
-            card.display()
+            print(card.display())
