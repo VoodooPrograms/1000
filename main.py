@@ -6,7 +6,7 @@ import tornado.websocket
 
 import json
 import datetime
-from Game import Game, Deck
+from Game import Game, Deck, MessageHandler
 from Game import Player
 
 
@@ -17,40 +17,22 @@ class MainHandler(tornado.web.RequestHandler):
         self.render("index.html", title="1000 App", items=items, musik=deck.create_musik(), cards=deck.cards)
 
 
-class SimpleWebSocket(tornado.websocket.WebSocketHandler):
-    connections = set()
-    players = set()
+class GameHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render("Templates/instructions.html", title="1000 App")
 
-    def open(self):
-        if len(self.connections) == 4:
-            self.close()
 
-        print("Connections opened")
-        self.connections.add(self)
-
-    def on_message(self, message):
-        decoded_message = json.loads(message)
-        now = datetime.datetime.now()
-        decoded_message["time"] = now.strftime('[%H:%M:%S]')
-        message = json.dumps(decoded_message)
-        self.players.add(Player.Player(decoded_message["user"]))
-
-        print(f'Message sent arrived: "{decoded_message["message"]}" from {decoded_message["user"]} at {now}')
-        [client.write_message(message) for client in self.connections]
-
-        if len(self.connections) == 1:
-            print("All players are connected")
-            Game.Game(self.players)
-
-    def on_close(self):
-        self.connections.remove(self)
-        print("Connection is down")
+class InstructionHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render("Templates/instructions.html")
 
 
 def make_app():
     return tornado.web.Application([
         (r"/", MainHandler),
-        (r"/websocket", SimpleWebSocket),
+        (r"/websocket", MessageHandler.MessageHandler),
+        (r"/game", GameHandler),
+        (r"/instruction", InstructionHandler),
         (r'/static/css/(.*)', tornado.web.StaticFileHandler, {'path': './static/css'}),
         (r"/static/images/(.*)", tornado.web.StaticFileHandler, {"path": "./static/images"})
     ])
