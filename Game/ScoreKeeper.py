@@ -2,8 +2,8 @@
 
 class ScoreKeeper:
 
-    def __init__(self):
-        pass
+    def __init__(self, players):
+        self.score_table = {}
 
     def is_game_finished(self):
         pass
