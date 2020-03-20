@@ -1,4 +1,8 @@
+import json
+
 from Game import Deck
+from Game.MessageWriter import MessageWriter
+from Game.Player import Player
 
 
 class Game:
@@ -8,7 +12,7 @@ class Game:
         self.current_player = 0
         self.state = "ON"
         self.create_deck()
-        self.init_hands()
+        print(self.players)
 
     def create_deck(self):
         self.deck = Deck.Deck()
@@ -19,7 +23,33 @@ class Game:
 
     def init_round(self):
         self.init_hands()
-        
+
+    def start_game(self):
+        pass
+
+    def next_game(self):
+        pass
+
+    def set_user(self):
+        pass
+
+    def deal_cards(self):
+        pass
+
+    def bid_ask(self):
+        pass
+
+    def make_move(self):
+        pass
+
+    def set_username(self, message):
+        pass
+
+    def update_chat(self, message):
+        pass
+
+    def add_player(self, player):
+        self.players.add(Player(player))
 
 
 """
