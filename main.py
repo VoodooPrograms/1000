@@ -34,6 +34,7 @@ def make_app():
         (r"/game", GameHandler),
         (r"/instruction", InstructionHandler),
         (r'/static/css/(.*)', tornado.web.StaticFileHandler, {'path': './static/css'}),
+        (r'/static/js/(.*)', tornado.web.StaticFileHandler, {'path': './static/js'}),
         (r"/static/images/(.*)", tornado.web.StaticFileHandler, {"path": "./static/images"})
     ])
 

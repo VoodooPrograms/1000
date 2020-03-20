@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}1000 app - instructions{% end %}
+
+{% block content %}
+  <pre>
+
+
+Gra dla 2-4 graczy z użyciem małej talii (od 9 do asa).
+
+Starszeństwo kart: 9, walet, dama, król, 10, as.
+
+Pierwszy rozdający losowy, później kolejny na lewo od ostatniego.
+
+Liczba rozdawanych kart przy grze w 3 osoby - po 7 kart, pozostałe 3 do musika; gra w dwie osoby - po 10 kart, reszta do dwóch musików po dwie karty.
+
+LICYTACJA
+
+Licytacja startuje od siedzącego po lewej rozdającego, który z automatu gra 100. Kolejni w kierunku na lewo mogą podnieść stawkę lub spasować.
+
+Licytowane wartości muszą być wielokrotnościami 10.
+
+Licytacja więcej niż 120 możliwa, tylko jeśli ma się jakiś meldunek.
+
+Nie można licytować więcej niż 120 + wartość w meldunkach.
+
+Zwycięzca licytacji to tzw. grający.
+
+Grający przy grze w trójkę odkrywa musik, bierze karty i daje przeciwnikom po jednej karcie ze swoich; przy grze w dwie osoby - odkrywa jeden z dwóch musików, bierze karty i odkłada dwie wybrane zakryte w miejsce wybranego musika.
+
+Grający deklaruje, ile ostatecznie gra - nie może to być mniej, niż licytował.
+
+ROZGRYWKA
+
+Grający wykłada kartę jako pierwszy, pozostali dokładają w kierunku na lewo.
+
+Istnieje obowiązek dokładania do koloru i przebijania silniejszą kartą (pierwszy obowiązek ważniejszy). Zagrane karty (tzw. lewa) zdobywa gracz, który zagrał najsilniejszą kartę.
+
+Meldunek to para dama-król jednego koloru - jedna z nich musi być zagrana jako pierwsza i zagrywający deklaruje "melduję".
+
+Kolor meldunku staje się atutowym - karty w tym kolorze przebijają inne. Atu obowiązuje do końca rozdania lub nowego meldunku.
+
+Wartości meldunków - kier (czerwień) 100, karo (dzwonek) 80, trefl (żołądź) 60, pik (wino) 40.
+
+PUNKTACJA
+
+Po zakończeniu rozdania podlicza się punkty za wzięte lewy.
+
+Wartości karty przy podliczaniu - as 11, dziesiątka 10, król 4, dama 3, walet 2, dziewiątka 0.
+
+Punkty za karty z musików zdobywa zwycięzca ostatniej lewy.
+
+Jeśli grający zdobędzie co najmniej tyle punktów, ile deklarował, to dopisuje sobie deklarowaną wartość do swojego wyniku, a jeśli nie, to ją odpisuje.
+
+Pozostali gracze zdobywają tyle, ile wzięli w kartach plus meldunki, zaokrąglone do wielokrotności 10 (od 5 w górę, poniżej - w dół).
+
+Koniec następuje, gdy ktoś zdobędzie 1000 pkt. lub więcej. Jeśli kilku zdobędzie jednocześnie, to wygrywa ten z nich, który był grającym, a jeśli żaden nie był, to ten, kto zdobył więcej (a jeśli zdobyli po równo, to jest remis).
+
+INNE
+
+Grający może wycofać się z grania, rzucając tzw. bombę. Nie odpisuje mu się wtedy wylicytowanych punktów.
+
+Pierwsza bomba jest bezkarna, przy kolejnych przeciwnikom dopisuje się po 60 pkt. (40 pkt. przy grze w czterech).
+
+Mając 800 pkt. lub więcej, kolejne punkty zdobywa się, tylko będąc grającym.
+
+Jeśli ktoś dostanie 4 dziewiątki, może poprosić o ponowne rozdanie.
+
+Gdy gra jest w czterech, jeden w każdym rozdaniu jest "na musie" i nie bierze udziału we właściwej grze, ale otrzymuje punkty za karty z musiku - za asa 50 pkt., za meldunki wartość meldunku.
+  </pre>
+{% end %}
