@@ -9,61 +9,46 @@
         <div style="width:50%; padding: 20px; overflow-y: scroll;">
             <div id="messages"></div>
             <div style="padding-top: 20px;">
-                <form onsubmit="return sendMessage()">
+                <form id="sendMessage">
                     <input id="message" type="text" style="width: 70%;"><button style="width: 25%">Send</button>
                 </form>
             </div>
         </div>
-        <p>Musik:</p>
-        {% for card in musik %}
-            <img src="{{ card.display() }}" alt="Zdjęcie karty {{ card.display() }}" width="100px"/>
-        {% end %}
-        <p>Reszta kart:</p>
-        {% for card in cards %}
-            <img src="{{ card.display() }}" alt="Zdjęcie karty {{ card.display() }}" width="100px"/>
-        {% end %}
+        <!--<p>Musik:</p>-->
+        <!--{% for card in musik %}-->
+            <!--<img src="{{ card.display() }}" alt="Zdjęcie karty {{ card.display() }}" width="100px"/>-->
+        <!--{% end %}-->
+        <!--<p>Reszta kart:</p>-->
+        <!--{% for card in cards %}-->
+            <!--<img src="{{ card.display() }}" alt="Zdjęcie karty {{ card.display() }}" width="100px"/>-->
+        <!--{% end %}-->
+        <script src="static/js/MessageHandler.js"></script>
         <script>
-        var ws = new WebSocket("ws://localhost:8888/websocket");
-        var username = prompt("What's your name?");
+        let username = prompt("What's your name?");
+        let message_handler = new MessageHandler();
+        message_handler.connect();
 
         if (username){
-            sendPacket(setPayload("Connected", username, Date()));
-            var usernameBox = document.getElementById("username");
+            let usernameBox = document.getElementById("username");
             usernameBox.innerHTML = "USERNAME: " + username;
+            message_handler.sendMessage({"type": "join_game", "user": username})
         }
 
-        function setPayload(message, user, time) {
-            return {"message": message,
+        document.getElementById("sendMessage").addEventListener('submit', function (evt) {
+            evt.preventDefault();
+            let messageInput = document.getElementById("message");
+            let message = messageInput.value;
+            messageInput.value = "";
+            message_handler.sendMessage({"type": "update_chat", "user": username, "message": message})
+        });
+
+        function setPayload(type, user, message, time) {
+            return {"type": type,
                     "user" : user,
+                    "message": message,
                     "time" : time}
         }
 
-        function sendPacket(payload) {
-            ws.send(JSON.stringify(payload))
-        }
-
-        function sendMessage() {
-            var messageInput = document.getElementById("message");
-            var message = messageInput.value;
-            var payload = {
-                "message": message,
-                "user": username
-            };
-            // Make the request to the WebSocket.
-            ws.send(JSON.stringify(payload));
-            // Clear the message from the input.
-            messageInput.value = "";
-            return false;
-        }
-
-        ws.onmessage = function(evt) {
-            console.log(evt);
-            var messageDict = JSON.parse(evt.data);
-            // Create a div with the format `user: message`.
-            var messageBox = document.createElement("div");
-            messageBox.innerHTML = messageDict.time + messageDict.user + ": " + messageDict.message;
-            document.getElementById("messages").appendChild(messageBox);
-        };
         </script>
     </body>
 </html>
