@@ -3,6 +3,7 @@ import json
 from Game import Deck
 from Game.MessageWriter import MessageWriter
 from Game.Player import Player
+from Game.ScoreKeeper import ScoreKeeper
 
 
 class Game:
@@ -11,6 +12,7 @@ class Game:
         self.deck = None
         self.current_player = 0
         self.state = "ON"
+        self.score_table = None
         self.create_deck()
         self.init_hands()
 
@@ -23,9 +25,10 @@ class Game:
 
     def init_round(self):
         self.init_hands()
+        self.init_score_table()
 
-    def start_game(self):
-        pass
+    def init_score_table(self):
+        self.score_table = ScoreKeeper(self.players)
 
     def next_game(self):
         pass

@@ -12,7 +12,6 @@ class Server:
         self.players = []
         self.writer = None
         self.game = None
-        self.scores_table = None
 
     def set_writer(self, writer):
         self.writer = writer
