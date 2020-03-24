@@ -2,13 +2,13 @@ import datetime
 import json
 
 from Game.Game import Game
+from Game.MessageWriter import MessageWriter
 from Game.Player import Player
 from main import MainHandler, GameHandler
 
 
 class Server:
     def __init__(self):
-        self.connections = set()
         self.players = []
         self.writer = None
         self.game = None
@@ -36,8 +36,22 @@ class Server:
     def start_game(self):
         self.game = Game(self.players)
         response = {'type': 'start_game'}
-        response['deck'] = self.game.deck.__dict__
+        response['musik'] = self.game.deck.create_musik()
+        response['hide'] = True
         self.writer.emitMessage(response)
+
+        response = {'type': 'init_hand'}
+        for player, connection in enumerate(self.writer.socket.connections):
+            response['hand'] = self.players[player].getHand()
+            self.set_writer(MessageWriter(connection))
+            self.writer.sendMessage(response)
+
+    def ask_for_cards(self, message):
+        response = {'type': 'init_hand'}
+        for player, connection in enumerate(self.writer.socket.connections):
+            response['hand'] = self.players[player].getHand()
+            self.set_writer(MessageWriter(connection))
+            self.writer.sendMessage(response)
 
     def init_round(self):
         pass
