@@ -9,7 +9,6 @@ MessageHandler.prototype.connect = function(){
     this.ws.onopen = function() {
         console.debug("Connection opened");
         self.sendMessage({"type": "add_player"})
-        //self.sendMessage({"type": "setUsername", "user": "bartek", "message": "wiadomosc"});
     };
 
     this.ws.onclose = function() {
@@ -49,8 +48,6 @@ MessageHandler.prototype.sendMessage = function (message) {
 
 MessageHandler.prototype.update_chat = function(evt) {
     console.debug(evt);
-    // let messageDict = JSON.parse(evt);
-    // Create a div with the format `user: message`.
     let messageBox = document.createElement("div");
     messageBox.innerHTML = evt.time + evt.user + ": " + evt.message;
     document.getElementById("messages").appendChild(messageBox);
@@ -58,21 +55,39 @@ MessageHandler.prototype.update_chat = function(evt) {
 
 MessageHandler.prototype.start_game = function (evt) {
     console.debug(evt);
-    for (let card of evt.deck.cards){
+    let musikBox = document.getElementById("musik");
+    for (let card of evt.musik){
         let cardBox = document.createElement("img");
-        cardBox.setAttribute("src", card.filename);
+        cardBox.setAttribute("src", (evt.hide) ? "/static/images/red_back.png" : card.filename);
         cardBox.setAttribute("width", "100");
-        document.body.append(cardBox)
+        cardBox.dataset.value = card.value;
+        musikBox.append(cardBox);
+        cardBox.addEventListener("click", function () {
+            cardBox.setAttribute("src", card.filename);
+        });
     }
+    // this.sendMessage({'type': 'ask_for_cards'});
 };
 
 MessageHandler.prototype.set_username = function (evt) {
     console.debug(evt);
     if (evt.freeSeats === false) {
-        prompt("There are no more seats");
+        alert("There are no more seats");
     } else {
         let messageBox = document.createElement("div");
         messageBox.innerHTML = evt.time + evt.user + ": " + evt.message;
         document.getElementById("messages").appendChild(messageBox);
+    }
+};
+
+MessageHandler.prototype.init_hand = function (evt) {
+    console.debug(evt);
+    let myCardBox = document.getElementById("my-hand")
+    for (let card of evt.hand){
+        let cardBox = document.createElement("img");
+        cardBox.setAttribute("src", card.filename);
+        cardBox.setAttribute("width", "100");
+        cardBox.dataset.value = card.value;
+        myCardBox.append(cardBox)
     }
 };
