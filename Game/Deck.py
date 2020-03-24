@@ -32,6 +32,9 @@ class Deck:
             card_to_pass = self.cards.pop()
             player.setCardInHand(card_to_pass)
 
+    def size(self):
+        return len(self.cards)
+
     def dump(self):
         for card in self.cards:
             print(card.display())

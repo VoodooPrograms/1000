@@ -22,6 +22,8 @@ class MessageHandler(tornado.websocket.WebSocketHandler):
         self.connections.add(self)
 
     def on_message(self, message):
+        self.server.set_writer(MessageWriter(self))
+
         decoded_message = json.loads(message)
         message_type = decoded_message["type"]
         if hasattr(self.server, message_type):

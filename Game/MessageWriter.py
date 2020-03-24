@@ -8,7 +8,6 @@ class MessageWriter:
         self.socket = socket
 
     def sendMessage(self, message):
-        print(self.socket.connections)
         self.socket.write_message(json.dumps(message, cls=JsonEncoder))
 
     def emitMessage(self, message):

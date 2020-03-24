@@ -12,7 +12,7 @@ class Game:
         self.current_player = 0
         self.state = "ON"
         self.create_deck()
-        print(self.players)
+        self.init_hands()
 
     def create_deck(self):
         self.deck = Deck.Deck()
