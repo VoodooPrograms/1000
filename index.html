@@ -5,22 +5,38 @@
         <link rel="stylesheet" href="static/css/style.css">
     </head>
     <body>
-        <div style="width: 100%; height: 40px" id="username"></div>
-        <div style="width:50%; padding: 20px; overflow-y: scroll;">
-            <div id="messages"></div>
-            <div style="padding-top: 20px;">
-                <form id="sendMessage">
-                    <input id="message" type="text" style="width: 70%;"><button style="width: 25%">Send</button>
-                </form>
+        <div id="board">
+            <div id="musik">
+
+            </div>
+
+            <div id="my-hand">
+
             </div>
         </div>
-        <div id="musik">
+        <div id="sidebar">
+            <div id="username">
 
+            </div>
+            <div id="score-table">
+                <h3>Tabela wyników</h3>
+                <div class="score-table-row">
+
+                </div>
+            </div>
+            <div id="chat">
+
+            </div>
+            <div id="messages">
+                <div>
+                    <form id="sendMessage">
+                        <input id="message" type="text"><button>Wyślij</button>
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <div id="my-hand">
 
-        </div>
         <!--<p>Musik:</p>-->
         <!--{% for card in musik %}-->
             <!--<img src="{{ card.display() }}" alt="Zdjęcie karty {{ card.display() }}" width="100px"/>-->

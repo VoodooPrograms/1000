@@ -50,7 +50,7 @@ MessageHandler.prototype.update_chat = function(evt) {
     console.debug(evt);
     let messageBox = document.createElement("div");
     messageBox.innerHTML = evt.time + evt.user + ": " + evt.message;
-    document.getElementById("messages").appendChild(messageBox);
+    document.getElementById("chat").appendChild(messageBox);
 };
 
 MessageHandler.prototype.start_game = function (evt) {
@@ -76,7 +76,7 @@ MessageHandler.prototype.set_username = function (evt) {
     } else {
         let messageBox = document.createElement("div");
         messageBox.innerHTML = evt.time + evt.user + ": " + evt.message;
-        document.getElementById("messages").appendChild(messageBox);
+        document.getElementById("chat").appendChild(messageBox);
     }
 };
 
