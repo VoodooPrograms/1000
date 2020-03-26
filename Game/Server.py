@@ -45,6 +45,10 @@ class Server:
             self.set_writer(MessageWriter(connection))
             self.writer.sendMessage(response)
 
+        response = {'type': 'init_score_table'}
+        response['score_table'] = self.game.score_table
+        self.writer.emitMessage(response)
+
     def ask_for_cards(self, message):
         response = {'type': 'init_hand'}
         for player, connection in enumerate(self.writer.socket.connections):

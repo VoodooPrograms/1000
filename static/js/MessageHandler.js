@@ -91,3 +91,14 @@ MessageHandler.prototype.init_hand = function (evt) {
         myCardBox.append(cardBox)
     }
 };
+
+MessageHandler.prototype.init_score_table = function (evt) {
+    console.debug(evt);
+    let scoreTableBox = document.getElementById("score-table");
+    for (let player in evt.score_table.score_table){
+        let scoreBox = document.createElement("div");
+        scoreBox.className = "score-table-row";
+        scoreBox.innerHTML = player + " : " + evt.score_table.score_table[player];
+        scoreTableBox.append(scoreBox);
+    }
+};

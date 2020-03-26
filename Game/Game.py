@@ -15,6 +15,7 @@ class Game:
         self.score_table = None
         self.create_deck()
         self.init_hands()
+        self.init_score_table()
 
     def create_deck(self):
         self.deck = Deck.Deck()
@@ -25,7 +26,6 @@ class Game:
 
     def init_round(self):
         self.init_hands()
-        self.init_score_table()
 
     def init_score_table(self):
         self.score_table = ScoreKeeper(self.players)
