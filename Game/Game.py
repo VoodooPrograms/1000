@@ -3,6 +3,7 @@ import json
 from Game import Deck
 from Game.MessageWriter import MessageWriter
 from Game.Player import Player
+from Game.Round import Round
 from Game.ScoreKeeper import ScoreKeeper
 
 
@@ -13,9 +14,11 @@ class Game:
         self.current_player = 0
         self.state = "ON"
         self.score_table = None
+        self.round = None
         self.create_deck()
         self.init_hands()
         self.init_score_table()
+        self.init_round()
 
     def create_deck(self):
         self.deck = Deck.Deck()
@@ -25,7 +28,7 @@ class Game:
             self.deck.deal_card(player)
 
     def init_round(self):
-        self.init_hands()
+        self.round = Round(self.players)
 
     def init_score_table(self):
         self.score_table = ScoreKeeper(self.players)
