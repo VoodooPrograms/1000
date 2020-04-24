@@ -56,15 +56,11 @@ MessageHandler.prototype.update_chat = function(evt) {
 MessageHandler.prototype.start_game = function (evt) {
     console.debug(evt);
     let musikBox = document.getElementById("musik");
-    for (let card of evt.musik){
+    for (i = 0 ; i < evt.musik; i++){
         let cardBox = document.createElement("img");
-        cardBox.setAttribute("src", (evt.hide) ? "/static/images/red_back.png" : card.filename);
+        cardBox.setAttribute("src", "/static/images/red_back.png");
         cardBox.setAttribute("width", "100");
-        cardBox.dataset.value = card.value;
         musikBox.append(cardBox);
-        cardBox.addEventListener("click", function () {
-            cardBox.setAttribute("src", card.filename);
-        });
     }
     // this.sendMessage({'type': 'ask_for_cards'});
 };
@@ -82,7 +78,7 @@ MessageHandler.prototype.set_username = function (evt) {
 
 MessageHandler.prototype.init_hand = function (evt) {
     console.debug(evt);
-    let myCardBox = document.getElementById("my-hand")
+    let myCardBox = document.getElementById("my-hand");
     for (let card of evt.hand){
         let cardBox = document.createElement("img");
         cardBox.setAttribute("src", card.filename);
@@ -101,4 +97,62 @@ MessageHandler.prototype.init_score_table = function (evt) {
         scoreBox.innerHTML = player + " : " + evt.score_table.score_table[player];
         scoreTableBox.append(scoreBox);
     }
+};
+
+
+MessageHandler.prototype.init_round = function (evt) {
+    console.debug(evt);
+    let potsTableBox = document.getElementById("pots-table");
+    for (let pot of evt.pots) {
+        let potBox = document.createElement("button");
+        potBox.innerHTML = pot;
+        potsTableBox.append(potBox);
+
+        potBox.addEventListener("click", function () {
+            console.log(this.innerHTML);
+            message_handler.sendMessage({"type": "set_pot", "pot_value": this.innerHTML});
+            potsTableBox.innerHTML = ""
+        });
+    }
+    let passButton = document.createElement("button");
+    passButton.innerHTML = "pass";
+    passButton.addEventListener("click", function () {
+        message_handler.sendMessage({"type": "set_pot", "pot_value": this.innerHTML});
+        potsTableBox.innerHTML = ""
+    });
+    potsTableBox.append(passButton);
+
+    // let modal = document.getElementById("myModal");
+    // modal.style.display = "block";
+};
+
+MessageHandler.prototype.show_musik = function (evt) {
+    console.debug(evt)
+    let musikBox = document.getElementById("musik");
+    musikBox.innerHTML = "";
+    for (let card of evt.musik){
+        let cardBox = document.createElement("img");
+        cardBox.setAttribute("src", card.filename);
+        cardBox.setAttribute("width", "100");
+        cardBox.dataset.value = card.value;
+        musikBox.append(cardBox);
+        cardBox.addEventListener("click", function () {
+            cardBox.setAttribute("src", card.filename);
+        });
+    }
+    let buttonGetMusik = document.createElement("button");
+    buttonGetMusik.innerHTML = "Weź karty z musika";
+    musikBox.append(buttonGetMusik);
+    buttonGetMusik.addEventListener("click", function () {
+        let musikCards = document.getElementById("musik").childNodes;
+        let myCardBox = document.getElementById("my-hand");
+        myCardBox.append(...musikCards);
+        buttonGetMusik.remove();
+        message_handler.sendMessage({"type": "set_cards_from_musik", "musik": evt.musik})
+    });
+};
+
+MessageHandler.prototype.give_card_to_next_player = function (evt) {
+    console.debug(evt)
+
 };

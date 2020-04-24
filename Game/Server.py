@@ -35,7 +35,7 @@ class Server:
     def start_game(self):
         self.game = Game(self.players)
         response = {'type': 'start_game'}
-        response['musik'] = self.game.deck.create_musik()
+        response['musik'] = 4
         response['hide'] = True
         self.writer.emitMessage(response)
 
@@ -49,6 +49,11 @@ class Server:
         response['score_table'] = self.game.score_table
         self.writer.emitMessage(response)
 
+        response = {"type": "init_round"}
+        print(self.game.round.CONTRACTS)
+        response['pots'] = self.game.round.CONTRACTS
+        self.writer.sendDirectMessage(response, self.game.current_player)
+
     def ask_for_cards(self, message):
         response = {'type': 'init_hand'}
         for player, connection in enumerate(self.writer.socket.connections):
@@ -56,11 +61,39 @@ class Server:
             self.set_writer(MessageWriter(connection))
             self.writer.sendMessage(response)
 
+    def init_pots(self):
+        response = {"type": "init_round"}
+        response["pots"] = tuple(self.game.round.get_contracts())
+        self.writer.sendDirectMessage(response, self.game.round.current_player)
+
+    def show_musik(self):
+        response = {"type": "show_musik"}
+        response["musik"] = self.game.deck.create_musik()
+        self.writer.sendDirectMessage(response, self.game.round.current_player)
+
+    def set_cards_from_musik(self, message):
+        print(message["musik"])
+        print(self.game.current_player)
+        print(self.game.round.current_player)
+        self.game.give_cards(message["musik"])
+        response = {"type": "give_card_to_next_player"}
+        response["nextPlayer"] = 1
+        self.writer.sendDirectMessage(response, 0)
+
     def init_round(self):
         pass
+
+    def set_pot(self, message):
+        self.game.round.set_pot(message["pot_value"])
+
+        if not(self.game.round.is_pot_finished()):
+            self.init_pots()
+        else:
+            self.show_musik()
 
     def update_chat(self, message):
         print(message)
         now = datetime.datetime.now()
         message["time"] = now.strftime('[%H:%M:%S]')
         self.writer.emitMessage(message)
+

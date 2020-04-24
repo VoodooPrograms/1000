@@ -10,7 +10,12 @@ class MessageWriter:
     def sendMessage(self, message):
         self.socket.write_message(json.dumps(message, cls=JsonEncoder))
 
+    def sendDirectMessage(self, message, client):
+        connection = self.socket.connections[client]
+        connection.write_message(json.dumps(message, cls=JsonEncoder))
+
     def emitMessage(self, message):
+        print(self.socket.connections)
         [client.write_message(json.dumps(message, cls=JsonEncoder)) for client in self.socket.connections]
 
     def sendError(self, exception):

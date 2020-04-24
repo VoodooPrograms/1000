@@ -1,6 +1,8 @@
 import json
 
 from Game import Deck
+from Game.Card import Card
+from Game.JsonEncoder import JsonEncoder
 from Game.MessageWriter import MessageWriter
 from Game.Player import Player
 from Game.Round import Round
@@ -32,6 +34,11 @@ class Game:
 
     def init_score_table(self):
         self.score_table = ScoreKeeper(self.players)
+
+    # from musik and from musik player to other players
+    def give_cards(self, musik):
+        for card in musik:
+            self.players[self.round.current_player].setCardInHand(Card(card["filename"], card["rank"], card["suit"], card["value"]))
 
     def next_game(self):
         pass

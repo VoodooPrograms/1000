@@ -8,7 +8,7 @@ from Game.Server import Server
 
 
 class MessageHandler(tornado.websocket.WebSocketHandler):
-    connections = set()
+    connections = list()
     server = Server()
 
     def open(self):
@@ -19,7 +19,7 @@ class MessageHandler(tornado.websocket.WebSocketHandler):
         self.server.set_writer(writer)
 
         print("Connections opened")
-        self.connections.add(self)
+        self.connections.append(self)
 
     def on_message(self, message):
         self.server.set_writer(MessageWriter(self))
