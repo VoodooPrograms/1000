@@ -10,13 +10,12 @@ class ScoreKeeper:
 
     def is_game_finished(self):
         for player, player_score in self.score_table.items():
-            if player_score > 1000:
+            if player_score >= 1000:
                 self.winner = player
                 return True
         return False
 
     def update_score_table(self, scores: dict):
-        print(scores)
         for player, score in scores.items():
             self.score_table[player] += score
         return self.is_game_finished()
