@@ -115,7 +115,9 @@ class Server:
         self.writer.sendDirectMessage(response, self.game.round.playing_current_player)
 
     def put_card_on_table(self, message):
-        chosen_card = self.game.round.players[self.game.round.playing_current_player].getCardFromHand(message["choosen_card"])
+        chosen_card = self.game.round.players[self.game.round.playing_current_player].getCardFromHand(
+            message["choosen_card"])
+
         is_finished = self.game.round.add_to_card_table(chosen_card)
         response = {"type": "show_card"}
         response["card"] = chosen_card

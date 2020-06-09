@@ -3,7 +3,7 @@
 class ScoreKeeper:
 
     def __init__(self, players):
-        self.score_table = dict()
+        self.score_table = {}
         self.winner = None
         for player in players:
             self.score_table[player.name] = 0
@@ -21,5 +21,3 @@ class ScoreKeeper:
             self.score_table[player] += score
         return self.is_game_finished()
 
-    def get_scores(self):
-        return self.score_table

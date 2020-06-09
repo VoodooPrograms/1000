@@ -37,7 +37,8 @@ class Game:
     # from musik and from musik player to other players
     def give_cards(self, musik):
         for card in musik:
-            self.players[self.round.current_player].setCardInHand(Card(card["filename"].split('/').pop()[:-4], card["rank"], card["suit"], card["value"]))
+            self.players[self.round.current_player].setCardInHand(
+                Card(card["filename"].split('/').pop()[:-4], card["rank"], card["suit"], card["value"]))
 
     def transfer_card(self, player1, player2, card):
         p1 = self.players[player1]

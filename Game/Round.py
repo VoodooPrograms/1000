@@ -2,7 +2,7 @@
 
 class Round:
 
-    CONTRACTS = (100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200)
+    CONTRACTS = tuple(contract for contract in range(100, 210, 10))
 
     def __init__(self, players, current_player=0):
         self.players = players
@@ -13,7 +13,7 @@ class Round:
         self.card_stack = []
         self.pot = 100
         self.last_pot = 90
-        self.card_table = dict()
+        self.card_table = {}
         self.round_points = {key: 0 for key in range(4)}
         self.card_color = None
         self.musik = None
@@ -57,7 +57,7 @@ class Round:
                 self.next_player()
 
     def is_pot_finished(self):
-        if self.pot == 200 or len(self.passed_players) == 3:
+        if self.pot == self.CONTRACTS[-1] or len(self.passed_players) == 3:
             print("Odkrycie musika, wysłanie jaki jest pot, zaczyna ten kto not in passed_players")
             return True
         else:
@@ -77,7 +77,7 @@ class Round:
             print(self.card_table)
             self.get_highest_card()
             self.card_color = None
-            self.card_table = dict()
+            self.card_table = {}
             return True
         return False
 
