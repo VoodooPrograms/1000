@@ -13,12 +13,10 @@ class Game:
     def __init__(self, players):
         self.players = players
         self.deck = None
-        self.current_player = 0
+        self.current_player = -1
         self.state = "ON"
         self.score_table = None
         self.round = None
-        self.create_deck()
-        self.init_hands()
         self.init_score_table()
         self.init_round()
 
@@ -30,7 +28,11 @@ class Game:
             self.deck.deal_card(player)
 
     def init_round(self):
-        self.round = Round(self.players)
+        self.create_deck()
+        self.init_hands()
+        print(f'current player game {self.current_player}')
+        self.next_player()
+        self.round = Round(self.players, self.current_player)
 
     def init_score_table(self):
         self.score_table = ScoreKeeper(self.players)
@@ -38,10 +40,15 @@ class Game:
     # from musik and from musik player to other players
     def give_cards(self, musik):
         for card in musik:
-            self.players[self.round.current_player].setCardInHand(Card(card["filename"], card["rank"], card["suit"], card["value"]))
+            self.players[self.round.current_player].setCardInHand(Card(card["filename"].split('/').pop()[:-4], card["rank"], card["suit"], card["value"]))
 
-    def next_game(self):
-        pass
+    def transfer_card(self, player1, player2, card):
+        p1 = self.players[player1]
+        p2 = self.players[player2]
+        p2.setCardInHand(p1.getCardFromHand(card))
+
+    def next_player(self):
+        self.current_player = (self.current_player + 1) % 4
 
     def set_user(self):
         pass

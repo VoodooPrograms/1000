@@ -16,8 +16,12 @@ class Player:
     def setCardInHand(self, card):
         self.hand.append(card)
 
+    def getCardFromHand(self, card):
+        return self.hand.pop(card)
+
     def getHand(self):
         return self.hand
 
     def isHuman(self):
         pass
+

@@ -79,6 +79,9 @@ MessageHandler.prototype.set_username = function (evt) {
 MessageHandler.prototype.init_hand = function (evt) {
     console.debug(evt);
     let myCardBox = document.getElementById("my-hand");
+    if (myCardBox.hasChildNodes()){
+        myCardBox.innerHTML = ""; // clear cardBox
+    }
     for (let card of evt.hand){
         let cardBox = document.createElement("img");
         cardBox.setAttribute("src", card.filename);
@@ -94,7 +97,7 @@ MessageHandler.prototype.init_score_table = function (evt) {
     for (let player in evt.score_table.score_table){
         let scoreBox = document.createElement("div");
         scoreBox.className = "score-table-row";
-        scoreBox.innerHTML = player + " : " + evt.score_table.score_table[player];
+        scoreBox.innerHTML = player + " : " + "<span id='" + player + "'>" + evt.score_table.score_table[player] + "</span>";
         scoreTableBox.append(scoreBox);
     }
 };
@@ -152,7 +155,98 @@ MessageHandler.prototype.show_musik = function (evt) {
     });
 };
 
+MessageHandler.prototype.clear_musik = function(evt) {
+    let musikBox = document.getElementById("musik");
+    musikBox.innerHTML = "";
+};
+
 MessageHandler.prototype.give_card_to_next_player = function (evt) {
+  const hand = document.getElementById("my-hand");
+  const cards = [...hand.children];
+  hand.addEventListener('click', function handleClick(e) {
+    const target = e.target;
+    // if click was on the container but not on any cards, don't do anything
+    if (target === hand) return;
+
+    // Remove event listener
+    hand.removeEventListener('click', handleClick);
+
+    target.remove();
+    // Calculate index, send message
+    const index = cards.indexOf(target);
+    message_handler.sendMessage({
+      "type": "give_away_card",
+      "choosen_card": index,
+      "for_player": evt.nextPlayer
+    });
+  });
+};
+
+MessageHandler.prototype.choose_card_to_play = function(evt) {
     console.debug(evt)
+    const hand = document.getElementById("my-hand");
+    const cards = [...hand.children];
+    hand.addEventListener('click', function handleClick(e) {
+    const target = e.target;
+    // if click was on the container but not on any cards, don't do anything
+    if (target === hand) return;
+
+    // Remove event listener
+    hand.removeEventListener('click', handleClick);
+
+    target.remove();
+    // Calculate index, send message
+    const index = cards.indexOf(target);
+    message_handler.sendMessage({
+      "type": "put_card_on_table",
+      "choosen_card": index
+    });
+  });
+};
+
+MessageHandler.prototype.show_card = function(evt) {
+    console.debug(evt);
+    let tableBox = document.getElementById("card-table");
+    let card = evt.card;
+
+    let cardBox = document.createElement("img");
+    cardBox.setAttribute("src", card.filename);
+    cardBox.setAttribute("width", "100");
+    cardBox.dataset.value = card.value;
+    tableBox.append(cardBox);
 
 };
+
+MessageHandler.prototype.update_score_table = function(evt) {
+    console.debug(evt);
+    for (let player in evt.score_table.score_table){
+        let scoreBox = document.getElementById(player);
+        // let score = parseInt(scoreBox.innerHTML);
+        scoreBox.innerHTML = evt.score_table.score_table[player];
+    }
+};
+
+MessageHandler.prototype.finish_game = function(evt) {
+    console.debug(evt);
+    let modal = document.createElement("div");
+    modal.className = "modal";
+    let modalContent = document.createElement("div");
+    modalContent.className = "modal-content";
+    modalContent.innerHTML = "Grę wygrał: " + evt.winner;
+    modal.append(modalContent);
+    document.body.append(modal);
+};
+
+MessageHandler.prototype.clear_table = function(evt) {
+    console.debug(evt);
+    let tableBox = document.getElementById("card-table");
+    setTimeout(function () {
+        tableBox.innerHTML = "";
+        }, evt.time_to_clear
+    );
+};
+
+MessageHandler.prototype.set_card_in_hand = function (evt) {
+    console.debug(evt);
+};
+

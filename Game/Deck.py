@@ -6,7 +6,7 @@ from Game import Card, Player
 class Deck:
     SUITS = ["D", "H", "S", "C"]
     RANKS = ["9", "10", "J", "Q", "K", "A"]
-    VALUES = [9, 10, 11, 12, 13, 14]
+    VALUES = [0, 10, 2, 3, 4, 11]
 
     def __init__(self):
         self.cards = []
