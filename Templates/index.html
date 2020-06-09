@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>{{ title }}</title>
-        <link rel="stylesheet" href="static/css/style.css">
+        <link rel="stylesheet" href="../static/css/style.css">
     </head>
     <body>
         <div id="board">
@@ -53,7 +53,7 @@
         <!--{% for card in cards %}-->
             <!--<img src="{{ card.display() }}" alt="Zdjęcie karty {{ card.display() }}" width="100px"/>-->
         <!--{% end %}-->
-        <script src="static/js/MessageHandler.js"></script>
+        <script src="../static/js/MessageHandler.js"></script>
         <script>
         let username = prompt("What's your name?");
         let message_handler = new MessageHandler();

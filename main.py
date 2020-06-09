@@ -14,7 +14,7 @@ class MainHandler(tornado.web.RequestHandler):
     def get(self):
         items = ["Andrzej", "Bartek", "Marcin", "Natalia"]
         deck = Deck.Deck()
-        self.render("index.html", title="1000 App", items=items, musik=deck.create_musik(), cards=deck.cards)
+        self.render("Templates/index.html", title="1000 App", items=items, musik=deck.create_musik(), cards=deck.cards)
 
 
 class GameHandler(tornado.web.RequestHandler):
