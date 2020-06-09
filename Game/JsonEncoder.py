@@ -1,7 +1,5 @@
 from json import JSONEncoder
 
-from Game.Card import Card
-
 
 class JsonEncoder(JSONEncoder):
     def default(self, o):

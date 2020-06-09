@@ -1,13 +1,8 @@
-import os
-
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
 
-import json
-import datetime
-from Game import Game, Deck, MessageHandler
-from Game import Player
+from Game import Deck, MessageHandler
 
 
 class MainHandler(tornado.web.RequestHandler):
