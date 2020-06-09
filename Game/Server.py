@@ -86,7 +86,7 @@ class Server:
 
     def set_cards_from_musik(self, message):
         print(message["musik"])
-        print(self.game.current_player)
+        print(f'self.game.current_player')
         print(self.game.round.current_player)
         self.clear_musik()
         self.game.give_cards(message["musik"])

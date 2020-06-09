@@ -42,14 +42,20 @@ class Round:
     def set_pot(self, pot):
         if pot == "pass":
             self.passed_players.append(self.current_player)
+            is_pot_finished = self.is_pot_finished()
+            if is_pot_finished:
+                self.next_player()
+                while self.current_player in self.passed_players:
+                    self.next_player()
         else:
             self.pot = int(pot)
             self.last_pot = int(self.pot)
             self.leader_player = self.current_player
 
+        print(f'Licytacja {self.current_player}')
         is_pot_finished = self.is_pot_finished()
         if is_pot_finished:
-            print(self.current_player)
+            print(f'Licytacje wygrał {self.current_player}')
             return is_pot_finished
         else:
             self.next_player()
