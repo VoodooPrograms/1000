@@ -8,6 +8,11 @@ from Game.Server import Server
 
 
 class MessageHandler(tornado.websocket.WebSocketHandler):
+    """
+    Handler for every connection establish via WebSockets.
+
+    It also resolve every message came, and send it to Server object
+    """
     connections = list()
     server = Server()
 

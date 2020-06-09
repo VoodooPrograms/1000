@@ -7,6 +7,11 @@ from Game.ScoreKeeper import ScoreKeeper
 
 
 class Game:
+    """
+    Main class of the Game.
+
+    It controls initiating of round, deck, hands and score table
+    """
     def __init__(self, players):
         self.players = players
         self.deck = None
@@ -37,34 +42,16 @@ class Game:
     # from musik and from musik player to other players
     def give_cards(self, musik):
         for card in musik:
-            self.players[self.round.current_player].setCardInHand(
+            self.players[self.round.current_player].set_card_in_hand(
                 Card(card["filename"].split('/').pop()[:-4], card["rank"], card["suit"], card["value"]))
 
     def transfer_card(self, player1, player2, card):
         p1 = self.players[player1]
         p2 = self.players[player2]
-        p2.setCardInHand(p1.getCardFromHand(card))
+        p2.set_card_in_hand(p1.get_card_from_hand(card))
 
     def next_player(self):
         self.current_player = (self.current_player + 1) % 4
-
-    def set_user(self):
-        pass
-
-    def deal_cards(self):
-        pass
-
-    def bid_ask(self):
-        pass
-
-    def make_move(self):
-        pass
-
-    def set_username(self, message):
-        pass
-
-    def update_chat(self, message):
-        pass
 
     def add_player(self, player):
         self.players.add(Player(player))

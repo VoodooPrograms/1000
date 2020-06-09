@@ -2,6 +2,9 @@ import os
 
 
 class Card:
+    """
+    Class consists of all needed information about cards
+    """
     STATIC_FILENAME = "/static/images/"
     STATIC_FILENAME_EXT = ".png"
 

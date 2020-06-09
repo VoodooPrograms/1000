@@ -4,6 +4,9 @@ from Game.JsonEncoder import JsonEncoder
 
 
 class MessageWriter:
+    """
+    Utility class for sending message to specific players
+    """
     def __init__(self, socket):
         self.socket = socket
 

@@ -6,6 +6,10 @@ from Game.Player import Player
 
 
 class Server:
+    """
+    All of the resolved message comes here.
+    It is the bridge between game logic and websockets communication system
+    """
     def __init__(self):
         self.players = []
         self.writer = None
@@ -50,7 +54,7 @@ class Server:
 
         response = {'type': 'init_hand'}
         for player, connection in enumerate(self.writer.socket.connections):
-            response['hand'] = self.players[player].getHand()
+            response['hand'] = self.players[player].hand
             self.set_writer(MessageWriter(connection))
             self.writer.sendMessage(response)
 
@@ -62,7 +66,7 @@ class Server:
     def ask_for_cards(self, message):
         response = {'type': 'init_hand'}
         for player, connection in enumerate(self.writer.socket.connections):
-            response['hand'] = self.players[player].getHand()
+            response['hand'] = self.players[player].hand
             self.set_writer(MessageWriter(connection))
             self.writer.sendMessage(response)
 
@@ -115,7 +119,7 @@ class Server:
         self.writer.sendDirectMessage(response, self.game.round.playing_current_player)
 
     def put_card_on_table(self, message):
-        chosen_card = self.game.round.players[self.game.round.playing_current_player].getCardFromHand(
+        chosen_card = self.game.round.players[self.game.round.playing_current_player].get_card_from_hand(
             message["choosen_card"])
 
         is_finished = self.game.round.add_to_card_table(chosen_card)

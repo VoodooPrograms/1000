@@ -12,15 +12,8 @@ class Player:
     def __str__(self):
         return f'Player {self.name}'
 
-    def setCardInHand(self, card):
+    def set_card_in_hand(self, card):
         self.hand.append(card)
 
-    def getCardFromHand(self, card):
+    def get_card_from_hand(self, card):
         return self.hand.pop(card)
-
-    def getHand(self):
-        return self.hand
-
-    def isHuman(self):
-        pass
-

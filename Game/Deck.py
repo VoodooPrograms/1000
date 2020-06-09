@@ -4,6 +4,9 @@ from Game import Card, Player
 
 
 class Deck:
+    """
+    Deck is set of rules and useful methods while operating on list of cards
+    """
     SUITS = ["D", "H", "S", "C"]
     RANKS = ["9", "10", "J", "Q", "K", "A"]
     VALUES = [0, 10, 2, 3, 4, 11]
@@ -30,7 +33,7 @@ class Deck:
     def deal_card(self, player: Player, amount: int = 5):
         for i in range(amount):
             card_to_pass = self.cards.pop()
-            player.setCardInHand(card_to_pass)
+            player.set_card_in_hand(card_to_pass)
 
     def size(self):
         return len(self.cards)
