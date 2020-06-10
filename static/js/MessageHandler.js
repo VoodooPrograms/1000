@@ -1,7 +1,10 @@
 
 function MessageHandler(){}
 
-MessageHandler.prototype.ws = new WebSocket("ws://localhost:8888/websocket");
+MessageHandler.host = "192.168.8.102";
+MessageHandler.port = ":8888";
+
+MessageHandler.prototype.ws = new WebSocket("ws://" + MessageHandler.host + MessageHandler.port + "/websocket");
 
 MessageHandler.prototype.connect = function(){
 
